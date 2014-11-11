@@ -1,4 +1,31 @@
 Rails.application.routes.draw do
+  devise_for :users, skip: :all
+
+  use_doorkeeper do
+    skip_controllers :applications, :authorized_applications
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resource :profile, only: [:show, :create, :update] do
+        put :token
+      end
+
+      resources :locations, only: [:index] do
+        collection do
+          post :facebook
+        end
+      end
+
+      resources :users
+
+      resources :location_shares, only: [:create]
+    end
+  end
+
+  get '/status', to: 'status#health'
+  get '/status/lightweight', to: 'status#lightweight'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -54,3 +81,4 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 end
+

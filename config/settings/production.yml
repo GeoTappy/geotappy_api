@@ -1,0 +1,8 @@
+google:
+  api_key: <%= ENV['GOOGLE_API_KEY'] %>
+
+apns:
+  auth_token: <%= ENV['ZEROPUSH_DEV_TOKEN'] %>
+
+token:
+  expires_in: 120
