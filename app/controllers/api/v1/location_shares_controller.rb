@@ -2,7 +2,7 @@ module Api
   module V1
     class LocationSharesController < BaseController
       def create
-        Celluloid::Actor[:location_share].process(
+        LocationShareJob.new.async.perform(
           location_share_params.merge(current_user: current_user)
         )
 

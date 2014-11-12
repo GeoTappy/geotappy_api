@@ -27,7 +27,7 @@ module Api
         if address.length != 64
           render json: { status: :error, message: 'invalid_token_size' }
         else
-          Celluloid::Actor[:device_registration].process(
+          DeviceRegistrationJob.new.async.perform(
             user:    current_user,
             address: address
           )

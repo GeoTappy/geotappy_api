@@ -26,6 +26,6 @@ class Share < ActiveRecord::Base
   end
 
   def send_push_notifications
-    Celluloid::Actor[:push_notification].process(share: self)
+    PushNotificationJob.new.async.perform(share: self)
   end
 end

@@ -18,6 +18,8 @@ gem 'interactor', '~> 3.0'
 gem 'google_places'
 gem 'geocoder'
 
+gem 'sucker_punch'
+
 # APNS
 gem 'zero_push'
 
@@ -45,7 +47,10 @@ end
 gem 'unicorn'
 
 # Use Capistrano for deployment
-gem 'capistrano-rails', group: :development
+group :development do
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
