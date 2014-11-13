@@ -45,7 +45,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 2 do
-      execute 'service unicorn restart'
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 
