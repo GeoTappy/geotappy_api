@@ -44,13 +44,12 @@ namespace :deploy do
 
   desc 'Restart application'
   task :restart do
-    on roles(:app), in: :sequence do
+    on roles(:app), in: :sequence, wait: 2 do
       execute 'service unicorn restart'
     end
   end
 
   after :publishing, :restart
-
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 1 do
       # Here we can do anything such as:
