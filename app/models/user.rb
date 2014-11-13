@@ -35,10 +35,10 @@ class User < ActiveRecord::Base
   end
 
   def update_push_token(token)
-    QueueDispatchers::DeviceRegistration.publish({
-      token:   token.to_s.gsub(' ', ''),
-      user_id: id
-    })
+    DeviceRegistrationJob.new.async.perform(
+      user: self,
+      address: token.to_s.gsub(' ', '')
+    )
   end
 
   def access_token

@@ -3,7 +3,7 @@ class DeviceRegistrationJob
 
   def perform(args = {})
     user    = args.fetch(:user)
-    address = args.fetch(:user)
+    address = args.fetch(:address)
 
     SuckerPunch.logger.debug "Update token: User ##{user.id}, address: #{address}"
 
@@ -12,7 +12,6 @@ class DeviceRegistrationJob
 
       if mobile_device.present?
         if address.present? && user.new_address?(address)
-
           with_response_logger { ZeroPush.unregister(mobile_device.address) }
           user.mobile_device.update_attributes(address: address)
           with_response_logger { ZeroPush.register(address) }
