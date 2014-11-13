@@ -25,7 +25,7 @@ module Api
         address = token_params[:token]
 
         if address.length != 64
-          render json: { status: :error, message: 'invalid_token_size' }
+          render json: { status: :error, message: 'invalid_token_size' }, status: 422
         else
           DeviceRegistrationJob.new.async.perform(
             user:    current_user,
