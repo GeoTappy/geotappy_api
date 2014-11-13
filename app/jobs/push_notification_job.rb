@@ -5,7 +5,7 @@ class PushNotificationJob
     share = args.fetch(:share)
 
     ActiveRecord::Base.connection_pool.with_connection do
-      device_tokens = device_token_for(share)
+      device_tokens = device_tokens_for(share)
 
       SuckerPunch.logger.debug "Sending push notification to: #{device_tokens.inspect}, Message: #{share.notification_message}, opts: #{share.notification_options}"
 
