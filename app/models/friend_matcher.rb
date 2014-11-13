@@ -21,7 +21,7 @@ class FriendMatcher
         provider_account_id: Friend.new(f).id
       ).first
 
-      return if friend.nil?
+      next if friend.nil?
 
       UserFriendship.create_if_new(user, friend)
     end
