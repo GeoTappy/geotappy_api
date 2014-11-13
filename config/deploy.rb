@@ -17,7 +17,7 @@ set :deploy_to, '/apps/geotappy_api'
 # set :format, :pretty
 
 # Default value for :log_level is :debug
-set :log_level, :info
+set :log_level, :debug
 
 # Default value for :pty is false
 # set :pty, true
@@ -57,6 +57,17 @@ namespace :deploy do
       # within release_path do
       #   execute :rake, 'cache:clear'
       # end
+    end
+  end
+end
+
+
+namespace :rails do
+  desc 'Open the rails console on the primary remote server'
+  task :console do
+    on roles(:app), primary: true do |host|
+      command = "/home/#{host.user}/.rbenv/shims/ruby #{deploy_to}/current/bin/rails console #{fetch(:stage)}"
+      exec "ssh -l #{host.user} #{host.hostname} -t 'cd #{deploy_to}/current && #{command}'"
     end
   end
 end
