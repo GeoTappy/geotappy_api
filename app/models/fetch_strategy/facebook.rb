@@ -9,7 +9,7 @@ module FetchStrategy
   class Facebook
     attr_accessor :token
 
-    FIELDS = %w[id first_name last_name email cover]
+    FIELDS = %w[id first_name last_name email cover gender]
 
     def initialize(token)
       self.token = token
@@ -19,7 +19,8 @@ module FetchStrategy
       {
         first_name:        user_data['first_name'],
         last_name:         user_data['last_name'],
-        email:             user_data['email'],
+        email:             email,
+        gender:            gender,
         profile_photo_url: profile_photo_url,
         cover_photo_url:   cover_photo_url
       }
@@ -39,6 +40,10 @@ module FetchStrategy
 
     def account_id
       user_data['id']
+    end
+
+    def gender
+      user_data['gender']
     end
 
     def profile_photo_url

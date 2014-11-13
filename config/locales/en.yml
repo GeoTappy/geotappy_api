@@ -22,6 +22,6 @@
 en:
   hello: "Hello world"
 
-  current_location: "%{name} is currently near %{location}"
+  current_location: "%{name} shared %{pronoun} location with you."
 
   my_current_location: "I am now at %{place}!"

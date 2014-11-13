@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  GENDER = {
+    'male'   => 0,
+    'female' => 1
+  }
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -32,6 +37,22 @@ class User < ActiveRecord::Base
     raise ActiveRecord::RecordNotFound if friendship.nil?
 
     friendship.friend
+  end
+
+  def gender=(gender_name)
+    write_attribute(:gender, GENDER[gender_name] || nil)
+  end
+
+  def gender
+    GENDER.invert[read_attribute(:gender)]
+  end
+
+  def pronoun
+    case gender
+    when 'male'   then 'his'
+    when 'female' then 'her'
+    else 'a'
+    end
   end
 
   def update_push_token(token)

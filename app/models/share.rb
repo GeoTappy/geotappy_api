@@ -6,7 +6,7 @@ class Share < ActiveRecord::Base
   has_many :user_shares
 
   def notification_message
-    title.presence || I18n.t('current_location', name: user.first_name, location: location.place_name)
+    title.presence || I18n.t('current_location', name: user.first_name, pronoun: user.pronoun)
   end
 
   def notification_options
