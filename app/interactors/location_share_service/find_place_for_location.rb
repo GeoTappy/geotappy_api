@@ -1,11 +1,9 @@
 class LocationShareService
   class FindPlaceForLocation < BaseInteractor
     def call
-      #place = places_client.spots(
-        #location.lat, location.lng, types: Location::GOOGLE_TYPES, rankby: 'distance'
-      #).first
-
-      place = OpenStruct.new(place_id: 1, name: 'Test', photos: [])
+      place = places_client.spots(
+        location.lat, location.lng, types: Location::GOOGLE_TYPES, rankby: 'distance'
+      ).first
 
       if place.present?
         location.place_id   = place.place_id
