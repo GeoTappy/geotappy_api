@@ -17,8 +17,8 @@ class Share < ActiveRecord::Base
           profile_photo_url: user.profile_photo_url
         },
         location: {
-          lat: location.lat,
-          lng: location.lng,
+          lat: location.lat.to_f,
+          lng: location.lng.to_f,
           name: location.place_name
         }
       }
