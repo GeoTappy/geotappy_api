@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  DEFAULT_COVER_URL = 'https://api.geotappy.com/cover.jpg'
   GENDER = {
     'male'   => 0,
     'female' => 1
@@ -37,6 +38,10 @@ class User < ActiveRecord::Base
     raise ActiveRecord::RecordNotFound if friendship.nil?
 
     friendship.friend
+  end
+
+  def cover_photo_url
+    read_attribute(:cover_photo_url).presence || DEFAULT_COVER_URL
   end
 
   def gender=(gender_name)
