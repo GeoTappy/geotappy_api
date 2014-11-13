@@ -1,6 +1,5 @@
 class PushNotificationJob
   include SuckerPunch::Job
-  workers 2
 
   def perform(args = {})
     share = args.fetch(:share)
@@ -8,7 +7,7 @@ class PushNotificationJob
     ActiveRecord::Base.connection_pool.with_connection do
       device_tokens = device_token_for(share)
 
-      debug "Sending push notification to: #{device_tokens.inspect}, Message: #{share.notification_message}, opts: #{share.notification_options}"
+      SuckerPunch.logger.debug "Sending push notification to: #{device_tokens.inspect}, Message: #{share.notification_message}, opts: #{share.notification_options}"
 
       PushNotification.new(device_tokens).notify(
         share.notification_message,

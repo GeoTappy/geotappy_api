@@ -5,7 +5,7 @@ class DeviceRegistrationJob
     user    = args.fetch(:user)
     address = args.fetch(:user)
 
-    logger.debug "Update token: User ##{user.id}, address: #{address}"
+    SuckerPunch.logger.debug "Update token: User ##{user.id}, address: #{address}"
 
     ActiveRecord::Base.connection_pool.with_connection do
       mobile_device = user.mobile_device
@@ -27,7 +27,7 @@ class DeviceRegistrationJob
 
   def with_response_logger
     yield.tap do |resp|
-      logger.debug resp.inspect
+      SuckerPunch.logger.debug resp.inspect
     end
   end
 end
