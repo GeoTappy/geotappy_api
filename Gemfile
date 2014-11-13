@@ -26,6 +26,8 @@ gem 'zero_push'
 gem 'devise'
 gem 'doorkeeper'
 
+gem 'newrelic_rpm'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
