@@ -1,6 +1,5 @@
 class LocationShareJob
   include SuckerPunch::Job
-  workers 4
 
   def perform(*args)
     debug args

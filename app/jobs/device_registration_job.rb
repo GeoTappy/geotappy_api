@@ -1,8 +1,6 @@
 class DeviceRegistrationJob
   include SuckerPunch::Job
 
-  workers 2
-
   def perform(args = {})
     user    = args.fetch(:user)
     address = args.fetch(:user)
