@@ -21,7 +21,8 @@ class StatusController < ApplicationController
     {
       database_ok: database_ok?,
       redis_ok:    redis_ok?,
-      overall_ok:  overall_ok?
+      overall_ok:  overall_ok?,
+      version:     GeotappyApi::VERSION
     }
   end
 
@@ -38,6 +39,10 @@ class StatusController < ApplicationController
   end
 
   def redis_ok?
-    Sidekiq.redis { |conn| conn.connected? }
+    Sidekiq.redis { |conn| conn.ping }
+    true
+  rescue => e
+    Rails.logger.error e.message
+    false
   end
 end
