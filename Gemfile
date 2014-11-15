@@ -58,6 +58,8 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
+gem 'syslogger', '~> 1.6.0'
+
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano-rails'

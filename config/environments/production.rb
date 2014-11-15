@@ -42,13 +42,17 @@ Rails.application.configure do
   # config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :debug
+  config.log_level = Settings.logger.level.to_sym
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups.
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = Syslogger.new(
+    'geotappy', Syslog::LOG_PID, Syslog.const_get(Settings.logger.facility)
+  ).tap do |logger|
+    logger.level = Logger.const_get(Settings.logger.level.upcase)
+  end
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
