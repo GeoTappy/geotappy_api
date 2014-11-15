@@ -1,5 +1,5 @@
 class PushNotificationWorker < BaseWorker
-  sidekiq_options queue: 'push', retry: 5, backtrace: true
+  sidekiq_options queue: :push, retry: 5, backtrace: true
 
   def perform(args = {})
     with_connection do
