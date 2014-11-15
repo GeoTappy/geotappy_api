@@ -2,7 +2,7 @@ class UserFriendship < ActiveRecord::Base
   belongs_to :user
   belongs_to :friend, class_name: 'User'
 
-  def self.friends_for(user)
+  def self.friends_for(user, ids = nil)
     where(user_id: user.id).includes(:friend).map(&:friend)
   end
 
@@ -13,6 +13,13 @@ class UserFriendship < ActiveRecord::Base
 
     new(user_id: user.id,   friend_id: friend.id).save
     new(user_id: friend.id, friend_id: user.id).save
+  end
+
+  def self.remove_friendship(user, friend)
+    where(
+      '(user_id = :user_id AND friend_id = :friend_id) OR (user_id = :friend_id AND friend_id = :user_id)',
+      user_id: user.id, friend_id: friend.id
+    ).destroy_all
   end
 
   def self.remove_connections(user)

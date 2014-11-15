@@ -42,6 +42,15 @@ group :development, :test do
   gem 'pry-rails'
 end
 
+
+group :development, :test do
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers', require: false
+end
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
