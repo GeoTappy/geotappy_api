@@ -22,7 +22,10 @@ module Api
       end
 
       def token
-        mobile_device = current_user.mobile_devices.new(address: address)
+        address = token_params[:token]
+
+        mobile_device = current_user.mobile_devices.where(address: address).first_or_initialize
+
         if mobile_device.save
           DeviceRegistrationWorker.perform_async(
             user_id:          current_user.id,
