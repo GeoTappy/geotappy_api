@@ -26,6 +26,6 @@ class Share < ActiveRecord::Base
   end
 
   def send_push_notifications
-    PushNotificationJob.new.async.perform(share: self)
+    PushNotificationWorker.perform_async(share_id: id)
   end
 end

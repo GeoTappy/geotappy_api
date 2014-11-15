@@ -4,5 +4,8 @@ google:
 apns:
   auth_token: ''
 
+sidekiq:
+  password: ''
+
 token:
   expires_in: 120 # minutes

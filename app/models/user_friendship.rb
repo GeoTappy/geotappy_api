@@ -3,7 +3,19 @@ class UserFriendship < ActiveRecord::Base
   belongs_to :friend, class_name: 'User'
 
   def self.friends_for(user, ids = nil)
-    where(user_id: user.id).includes(:friend).map(&:friend)
+    if ids.present?
+      where(user_id: user.id, friend_id: ids).includes(:friend).map(&:friend)
+    else
+      where(user_id: user.id).includes(:friend).map(&:friend)
+    end
+  end
+
+  def self.friends_exists?(user, ids = nil)
+    if ids.present?
+      where(user_id: user.id, friend_id: ids).exists?
+    else
+      where(user_id: user.id).exists?
+    end
   end
 
   def self.create_if_new(user, friend)

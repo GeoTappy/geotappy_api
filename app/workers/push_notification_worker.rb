@@ -1,13 +1,13 @@
-class PushNotificationJob
-  include SuckerPunch::Job
+class PushNotificationWorker < BaseWorker
+  sidekiq_options queue: 'push', retry: 5, backtrace: true
 
   def perform(args = {})
-    share = args.fetch(:share)
+    with_connection do
+      share = Share.find(args.fetch('share_id'))
 
-    ActiveRecord::Base.connection_pool.with_connection do
       device_tokens = device_tokens_for(share)
 
-      SuckerPunch.logger.debug "Sending push notification to: #{device_tokens.inspect}, Message: #{share.notification_message}, opts: #{share.notification_options}"
+      logger.info "Sending push notification to: #{device_tokens.inspect}, Message: #{share.notification_message}, opts: #{share.notification_options}"
 
       PushNotification.new(device_tokens).notify(
         share.notification_message,

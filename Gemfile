@@ -18,7 +18,8 @@ gem 'interactor', '~> 3.0'
 gem 'google_places'
 gem 'geocoder'
 
-gem 'sucker_punch'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
 
 # APNS
 gem 'zero_push'
@@ -61,6 +62,7 @@ gem 'unicorn'
 group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'
+  gem 'capistrano-sidekiq'
 end
 
 # Use debugger
