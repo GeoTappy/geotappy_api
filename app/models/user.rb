@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   has_many :friends, through: :user_friendships
 
   # TODO: Demo mode, user has only one device now
-  has_one :mobile_device, dependent: :delete
+  has_many :mobile_devices, dependent: :delete_all
 
   has_many :shares
   has_many :user_shares

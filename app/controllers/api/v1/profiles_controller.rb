@@ -22,17 +22,16 @@ module Api
       end
 
       def token
-        address = token_params[:token]
-
-        if address.length != 64
-          render json: { status: :error, message: 'invalid_token_size' }, status: 422
-        else
+        mobile_device = current_user.mobile_devices.new(address: address)
+        if mobile_device.save
           DeviceRegistrationWorker.perform_async(
-            user_id: current_user.id,
-            address: address
+            user_id:          current_user.id,
+            mobile_device_id: mobile_device.id
           )
 
-          render json: { status: :ok }
+          render json: mobile_device, status: :created
+        else
+          render json: mobile_device.errors
         end
       end
 

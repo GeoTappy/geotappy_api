@@ -1,32 +1,15 @@
 class DeviceRegistrationWorker < BaseWorker
-  sidekiq_options retry: 3, backtrace: true
+  sidekiq_options retry: 5, backtrace: true
 
   def perform(args = {})
     with_connection do
       user    = User.find(args.fetch('user_id'))
-      address = args.fetch('address')
+      device  = MobileDevice.find(args.fetch('mobile_device_id'))
 
-      logger.info "Update token: User ##{user.id}, address: #{address}"
+      logger.info "Register device token: User ##{user.id}, device: #{device.inspect}"
 
-      mobile_device = user.mobile_device
-
-      if mobile_device.present?
-        if address.present? && user.new_address?(address)
-
-          with_response_logger do
-            ZeroPush.unregister(mobile_device.address)
-          end
-
-          user.mobile_device.update_attributes(address: address)
-
-          with_response_logger do
-            ZeroPush.register(address)
-          end
-        end
-      else
-        user.create_mobile_device(address: address)
-
-        with_response_logger { ZeroPush.register(address) } if address.present?
+      with_response_logger do
+        ZeroPush.register(device.address)
       end
     end
   end
