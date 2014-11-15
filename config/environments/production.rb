@@ -48,11 +48,13 @@ Rails.application.configure do
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups.
-  config.logger = Syslogger.new(
-    'geotappy', Syslog::LOG_PID, Syslog.const_get(Settings.logger.facility)
-  ).tap do |logger|
-    logger.level = Logger.const_get(Settings.logger.level.upcase)
-  end
+  config.logger = ActiveSupport::TaggedLogging.new(
+    Syslogger.new(
+      'geotappy_rails', Syslog::LOG_PID, Syslog.const_get(Settings.logger.facility)
+    ).tap do |logger|
+      logger.level = Logger.const_get(Settings.logger.level.upcase)
+    end
+  )
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
