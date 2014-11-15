@@ -49,7 +49,7 @@ Rails.application.configure do
 
   # Use a different logger for distributed setups.
   config.logger = Syslogger.new(
-    'geotappy', Syslog::LOG_PID, Syslog.const_get(Settings.logger.facility)
+    'geotappy_rails', Syslog::LOG_PID, Syslog.const_get(Settings.logger.facility)
   ).tap do |logger|
     logger.level = Logger.const_get(Settings.logger.level.upcase)
   end
