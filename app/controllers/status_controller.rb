@@ -20,8 +20,13 @@ class StatusController < ApplicationController
   def health_status
     {
       database_ok: database_ok?,
-      overall_ok: overall_ok?
+      redis_ok:    redis_ok?,
+      overall_ok:  overall_ok?
     }
+  end
+
+  def overall_ok?
+    [database_ok?, redis_ok?].all?
   end
 
   def database_ok?
@@ -32,7 +37,7 @@ class StatusController < ApplicationController
     end
   end
 
-  def overall_ok?
-    [database_ok?].all?
+  def redis_ok?
+    Sidekiq.redis { |conn| conn.connected? }
   end
 end
