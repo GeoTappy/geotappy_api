@@ -28,7 +28,6 @@ module Api
 
         if mobile_device.save
           DeviceRegistrationWorker.perform_async(
-            user_id:          current_user.id,
             mobile_device_id: mobile_device.id
           )
 

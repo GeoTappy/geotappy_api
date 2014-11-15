@@ -3,10 +3,9 @@ class DeviceRegistrationWorker < BaseWorker
 
   def perform(args = {})
     with_connection do
-      user    = User.find(args.fetch('user_id'))
       device  = MobileDevice.find(args.fetch('mobile_device_id'))
 
-      logger.info "Register device token: User ##{user.id}, device: #{device.inspect}"
+      logger.info "Register device #{device.inspect}"
 
       with_response_logger do
         ZeroPush.register(device.address)
