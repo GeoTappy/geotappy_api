@@ -22,7 +22,9 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 
 # APNS
-gem 'zero_push'
+gem 'houston'
+
+gem 'connection_pool'
 
 gem 'devise'
 gem 'doorkeeper'

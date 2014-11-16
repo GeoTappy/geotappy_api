@@ -1,32 +1,18 @@
 class PushNotification
-  def initialize(device_tokens)
+  def initialize(share, device_tokens)
+    self.share         = share
     self.device_tokens = device_tokens
   end
 
-  def notify(message, options = {})
-    return if device_tokens.empty?
+  def args
+    notification_options = default_options.merge(share.notification_options)
 
-    notification = default_options.merge(
-      push_options(message, options)
-    )
-
-    Rails.logger.info "Sending push notification: #{notification.inspect}"
-
-    ZeroPush.notify(notification).tap do |push|
-      Rails.logger.debug push.inspect
-    end
+    [device_tokens, share.notification_message, notification_options]
   end
 
   private
 
-  attr_accessor :device_tokens
-
-  def push_options(message, options)
-    options.merge(
-      device_tokens: device_tokens,
-      alert:         message
-    )
-  end
+  attr_accessor :device_tokens, :share
 
   def default_options
     @default_options ||= {

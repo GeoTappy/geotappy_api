@@ -27,10 +27,6 @@ module Api
         mobile_device = current_user.mobile_devices.where(address: address).first_or_initialize
 
         if mobile_device.save
-          DeviceRegistrationWorker.perform_async(
-            mobile_device_id: mobile_device.id
-          )
-
           render json: mobile_device, status: :created
         else
           render json: mobile_device.errors
