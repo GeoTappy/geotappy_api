@@ -1,0 +1,19 @@
+apns:
+  cert: ''
+  env:  ''
+  passphrase: ''
+
+google:
+  api_key: ''
+
+logger:
+  level: 'debug'
+
+sidekiq:
+  password: ''
+
+secret_key: 'foobar'
+
+token:
+  expires_in: 100000
+

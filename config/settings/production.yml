@@ -1,8 +1,21 @@
-google:
-  api_key: <%= ENV['GOOGLE_API_KEY'] %>
-
 apns:
-  auth_token: <%= ENV['ZEROPUSH_DEV_TOKEN'] %>
+  cert:       'prod_cert.pem'
+  env:        'prod'
+  passphrase: ''
+
+google:
+  api_key: ''
+
+logger:
+  level:    'info'
+  facility: 'LOG_LOCAL1'
+
+sidekiq:
+  password: ''
+
+secret_key: ''
 
 token:
-  expires_in: 120
+  expires_in: 100000
+
+
