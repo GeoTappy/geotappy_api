@@ -4,6 +4,7 @@ module Api
       doorkeeper_for :all, unless: ->{ controller_name == 'profiles' && action_name == 'create' }
 
       protect_from_forgery with: :null_session
+      skip_before_filter :verify_authenticity_token
 
       respond_to :json
 
