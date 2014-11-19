@@ -34,6 +34,9 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
+# Run db:migrate only if new migrations available
+set :conditionally_migrate, true
+
 set :rbenv_type, :user # or :system, depends on your rbenv setup
 set :rbenv_ruby, '2.1.3'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
@@ -47,14 +50,14 @@ namespace :deploy do
 
   desc 'Restart application'
   task :restart do
-    on roles(:app), in: :sequence, wait: 2 do
+    on roles(:app), in: :sequence, wait: 0 do
       execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 
   after :publishing, :restart
   after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 1 do
+    on roles(:web), in: :groups, limit: 3, wait: 0 do
       # Here we can do anything such as:
       # within release_path do
       #   execute :rake, 'cache:clear'
