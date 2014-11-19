@@ -29,7 +29,13 @@ gem 'connection_pool'
 gem 'devise'
 gem 'doorkeeper'
 
-gem 'newrelic_rpm'
+
+group :production do
+  # Use unicorn as the app server
+  gem 'unicorn'
+  gem 'newrelic_rpm'
+end
+
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -56,9 +62,6 @@ end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-gem 'unicorn'
 
 gem 'syslogger', '~> 1.6.0'
 
