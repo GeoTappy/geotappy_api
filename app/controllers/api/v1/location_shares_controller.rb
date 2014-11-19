@@ -9,7 +9,7 @@ module Api
           LocationShareService.call(share_params)
           render json: { status: :ok }
         else
-          render json: share_validator.errors
+          render json: share_validator.errors, status: :unprocessable_entity
         end
       end
 

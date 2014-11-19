@@ -12,7 +12,7 @@ class LocationShareValidator
 
   def initialize(params)
     @current_user = params[:current_user]
-    @user_ids     = params[:user_ids]
+    @user_ids     = Array(params[:user_ids])
     @location     = params[:location] || {}
     @lat          = @location[:lat]
     @lng          = @location[:lng]
@@ -20,8 +20,14 @@ class LocationShareValidator
   end
 
   def friends_exists?
-    return false if user_ids.empty?
+    return false if user_ids.blank?
 
+    any_friendship_exists?
+  end
+
+  private
+
+  def any_friendship_exists?
     UserFriendship.friends_exists?(current_user, user_ids)
   end
 end

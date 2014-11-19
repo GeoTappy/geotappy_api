@@ -8,6 +8,7 @@ google:
 
 logger:
   level: 'debug'
+  facility: 'LOG_LOCAL1'
 
 sidekiq:
   password: ''
