@@ -1,9 +1,8 @@
 class Share < ActiveRecord::Base
   belongs_to :user
 
-  has_one :location
-
-  has_many :user_shares
+  has_one :location,     dependent: :destroy
+  has_many :user_shares, dependent: :destroy
 
   def notification_message
     title.presence || I18n.t('current_location', name: user.first_name, pronoun: user.pronoun)

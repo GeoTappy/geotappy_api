@@ -18,11 +18,11 @@ class User < ActiveRecord::Base
   # TODO: Demo mode, user has only one device now
   has_many :mobile_devices, dependent: :delete_all
 
-  has_many :shares
-  has_many :user_shares
+  has_many :shares,      dependent: :destroy
+  has_many :user_shares, depentend: :delete_all
   has_many :shared_locations, through: :user_shares
 
-  has_many :locations
+  has_many :locations, dependent: :delete_all
 
   def self.with_email(email)
     return if email.blank?

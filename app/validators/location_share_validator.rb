@@ -20,6 +20,8 @@ class LocationShareValidator
   end
 
   def friends_exists?
+    return false if user_ids.empty?
+
     UserFriendship.friends_exists?(current_user, user_ids)
   end
 end
