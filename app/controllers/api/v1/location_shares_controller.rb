@@ -2,6 +2,7 @@ module Api
   module V1
     class LocationSharesController < BaseController
       def create
+        share_params    = location_share_params.merge(current_user: current_user)
         share_validator = LocationShareValidator.new(share_params)
 
         if share_validator.valid?
@@ -10,14 +11,6 @@ module Api
         else
           render json: share_validator.errors, status: :unprocessable_entity
         end
-      end
-
-      private
-
-      def share_params
-        location_share_params.merge(
-          current_user: current_user
-        )
       end
 
       def location_share_params
