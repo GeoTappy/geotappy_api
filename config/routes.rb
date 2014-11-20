@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       resources :users
 
       resources :location_shares, only: [:create]
+
+      resource :stats, only: [:show]
     end
   end
 
