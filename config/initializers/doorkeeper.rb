@@ -6,7 +6,9 @@ Doorkeeper.configure do
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_from_credentials do
     provider = params[:provider] || 'password'
-    Authenticators.const_get(provider.classify).new(params).authenticate
+    Authenticators.const_get(provider.classify).new(
+      params.merge(request: request)
+    ).authenticate
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
