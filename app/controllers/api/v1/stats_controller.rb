@@ -9,8 +9,8 @@ module Api
             user_friendships: (UserFriendship.count / 2)
           },
           today: {
-            users: User.where('created_at >= ?', DateTime.now.beginning_of_day)
-            shares: Share.where('created_at >= ?', DateTime.now.beginning_of_day)
+            users: User.where('created_at >= ?', DateTime.now.beginning_of_day).count,
+            shares: Share.where('created_at >= ?', DateTime.now.beginning_of_day).count
           },
           profile: {
             friends: current_user.friends.count,
