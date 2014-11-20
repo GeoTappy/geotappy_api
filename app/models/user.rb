@@ -74,4 +74,8 @@ class User < ActiveRecord::Base
   def new_address?(address)
     mobile_device.try(:address) != address
   end
+
+  def email_required?
+    false
+  end
 end
