@@ -12,13 +12,18 @@ module Api
             users: User.where('created_at >= ?', DateTime.now.beginning_of_day).count,
             shares: Share.where('created_at >= ?', DateTime.now.beginning_of_day).count
           },
-          profile: {
-            friends: current_user.friends.count,
-            shares:  current_user.shares.count,
-            received_shares: current_user.user_shares.count,
-            mobile_devices: current_user.mobile_devices.count
-          }
         }
+
+        if current_user.present?
+          stats.merge!(
+            profile: {
+              friends: current_user.friends.count,
+              shares:  current_user.shares.count,
+              received_shares: current_user.user_shares.count,
+              mobile_devices: current_user.mobile_devices.count
+            }
+          )
+        end
 
         render json: { stats: stats }
       end
