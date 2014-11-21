@@ -12,6 +12,7 @@ class Share < ActiveRecord::Base
     {
       info: {
         sender: {
+          id: user.id,
           name: [user.first_name, user.last_name].compact.join(' '),
           profile_photo_url: user.profile_photo_url
         },
