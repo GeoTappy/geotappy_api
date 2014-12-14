@@ -1,7 +1,7 @@
 class APNSWorker < BaseWorker
   sidekiq_options queue: :push, retry: 5, backtrace: true
 
-  APN_POOL = ConnectionPool.new(size: 2, timeout: 300) do
+  APN_POOL = ConnectionPool.new(size: 1, timeout: 300) do
     APNConnection.new
   end
 

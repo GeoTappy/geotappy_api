@@ -29,7 +29,7 @@ module Api
         if mobile_device.save
           render json: mobile_device, status: :created
         else
-          render json: mobile_device.errors
+          render json: { errors: mobile_device.errors }, status: :unprocessable_entity
         end
       end
 
