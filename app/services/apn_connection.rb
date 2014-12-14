@@ -19,7 +19,11 @@ class APNConnection
 
   def write(data)
     begin
-      raise "Connection is closed" unless @connection.open?
+      unless @connection.open?
+        Rails.logger.error "Connection is closed. Retrying..."
+        raise "Connection is closed"
+      end
+
       @connection.write(data)
     rescue Exception => e
       attempts ||= 0

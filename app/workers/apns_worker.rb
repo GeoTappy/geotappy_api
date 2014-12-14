@@ -21,6 +21,8 @@ class APNSWorker < BaseWorker
           { device: token, alert: message }.merge(notification_options)
         )
         connection.write(notification.message)
+
+        logger.info "Send push notification to #{token} (Error: #{notification.error})"
       end
     end
   end
