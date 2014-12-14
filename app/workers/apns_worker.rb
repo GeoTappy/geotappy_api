@@ -1,9 +1,9 @@
 class APNSWorker < BaseWorker
   sidekiq_options queue: :push, retry: 5, backtrace: true
 
-  APN_POOL = ConnectionPool.new(size: 1, timeout: 300) do
-    APNConnection.new
-  end
+  # APN_POOL = ConnectionPool.new(size: 1, timeout: 300) do
+  #  APNConnection.new
+  # end
 
   def perform(addresses, message, notification_options = {})
     mobile_tokens = Array(addresses)
@@ -15,15 +15,14 @@ class APNSWorker < BaseWorker
 
     logger.info "Sending push notification: [#{addresses}, message: #{message}, data: #{notification_options}]"
 
-    APN_POOL.with do |connection|
-      mobile_tokens.each do |token|
-        notification = Houston::Notification.new(
-          { device: token, alert: message }.merge(notification_options)
-        )
-        connection.write(notification.message)
+    mobile_tokens.each do |token|
+      notification = Houston::Notification.new(
+        { device: token, alert: message }.merge(notification_options)
+      )
 
-        logger.info "Send push notification to #{token} (Error: #{notification.error})"
-      end
+      APN.push(notification)
+
+      logger.info "Send push notification to #{token} (Error: #{notification.error})"
     end
   end
 end
